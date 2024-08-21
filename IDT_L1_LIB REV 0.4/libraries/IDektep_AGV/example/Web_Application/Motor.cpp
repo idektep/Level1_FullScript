@@ -16,12 +16,28 @@
 #define L_ENA 19  //Adjust speed //motor4
 #define L_ENB 4   //Adjust speed //motor3
 
+#define LED_R 16
+#define LED_L 17
+
 int LA_V;
 int LB_V;
 int RA_V;
 int RB_V;
 
+void Motor::ledBlink(int delayTime)
+{
+    digitalWrite(LED_R, LOW);
+    digitalWrite(LED_L, LOW);
+    delay(delayTime);
+    digitalWrite(LED_R, HIGH);
+    digitalWrite(LED_L, HIGH);
+    delay(delayTime);
+}
+
 void Motor::motorInit() {
+
+  pinMode(LED_L, OUTPUT);
+  pinMode(LED_R, OUTPUT);
   pinMode(MR_IN1, OUTPUT);
   pinMode(MR_IN2, OUTPUT);
   pinMode(MR_IN3, OUTPUT);
@@ -45,6 +61,8 @@ void Motor::adjectMotorSpeed(int LA, int LB, int RA, int RB) {
 }
 
 void Motor::forward() {
+  digitalWrite(LED_R, HIGH);
+  digitalWrite(LED_L, HIGH);
   analogWrite(L_ENA, LA_V);
   analogWrite(L_ENB, LB_V);
   analogWrite(R_ENA, RA_V);
@@ -165,6 +183,8 @@ void Motor::slide_right_back() {
 }
 
 void Motor::turn_left() {
+  digitalWrite(LED_L, HIGH);
+  digitalWrite(LED_R, LOW);
   analogWrite(L_ENA, LA_V);
   analogWrite(L_ENB, LB_V);
   analogWrite(R_ENA, RA_V);
@@ -180,6 +200,8 @@ void Motor::turn_left() {
 }
 
 void Motor::turn_right() {
+  digitalWrite(LED_R, HIGH);
+  digitalWrite(LED_L, LOW);
   analogWrite(L_ENA, LA_V);
   analogWrite(L_ENB, LB_V);
   analogWrite(R_ENA, RA_V);
@@ -195,6 +217,8 @@ void Motor::turn_right() {
 }
 
 void Motor::stop() {
+  digitalWrite(LED_R, LOW);
+  digitalWrite(LED_L, LOW);
   analogWrite(L_ENA, LA_V);
   analogWrite(L_ENB, LB_V);
   analogWrite(R_ENA, RA_V);
